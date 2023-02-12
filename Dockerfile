@@ -16,6 +16,7 @@ RUN ./build.sh
 
 
 FROM eclipse-temurin:${JDKVER}-jdk-focal
+ARG TDVERSION
 ADD taos.cfg /etc/taos/taos.cfg
 COPY --from=build-env /tdengine/debug/build/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so.${TDVERSION}
 RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so
