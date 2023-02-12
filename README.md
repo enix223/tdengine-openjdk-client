@@ -34,7 +34,7 @@ docker run -it --rm -v PATH_TO_YOUR_JAR_FILE.jar:/app.jar \
 
 For more information, please refer to [example](./example/).
 
-## Building image
+## 3. Building image
 
 Argument:
 
