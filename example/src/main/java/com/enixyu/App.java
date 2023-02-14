@@ -1,5 +1,6 @@
 package com.enixyu;
 
+import com.taosdata.jdbc.TSDBDatabaseMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public class App {
   public static void main(String[] args) {
     try {
       Class.forName("com.taosdata.jdbc.TSDBDriver");
-      String jdbcUrl = "jdbc:TAOS://tdengine:6030/test?user=root&password=taosdata";
+      String jdbcUrl = "jdbc:TAOS://tdengine:6030/db?user=root&password=taosdata";
       Connection conn = DriverManager.getConnection(jdbcUrl);
 
       Statement stmt = conn.createStatement();
@@ -42,7 +43,19 @@ public class App {
         temperature = resultSet.getInt(2);
         humidity = resultSet.getFloat("humidity");
 
-        System.out.printf("%s, %d, %s\n", ts, temperature, humidity);
+        System.out.printf("data => %s, %d, %s\n", ts, temperature, humidity);
+      }
+
+      // get metadata
+      var metadata = conn.getMetaData().unwrap(TSDBDatabaseMetaData.class);
+      var cols = metadata.getColumns("db", "", "tb", "");
+      while (cols.next()) {
+        var name = cols.getString("COLUMN_NAME");
+        var type = cols.getString("DATA_TYPE");
+        var size = cols.getString("COLUMN_SIZE");
+        var digits = cols.getString("DECIMAL_DIGITS");
+        var isNull = cols.getString("IS_NULLABLE");
+        System.out.printf("name = %s, type = %s, size = %s, digits = %s, isNull = %s\n", name, type, size, digits, isNull);
       }
     } catch (ClassNotFoundException e) {
       System.out.println("JDBC driver not found");

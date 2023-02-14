@@ -1,9 +1,9 @@
 name: Build and deploy to docker hub
 
 on:
-  push:
-    branches:
-      - "main"
+  label:
+    types:
+      - created
 
 jobs:
   docker:

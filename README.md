@@ -16,19 +16,21 @@ Run TDengine container
 
 ```shell
 docker run -it --rm -d \
+    --name tdengine-openjdk-demo \
     --hostname=tdengine \
     -p 6030-6041:6030-6041 \
     -p 6030-6041:6030-6041/udp \
-    tdengine/tdengine:3.0.2.3
+    tdengine/tdengine:3.0.2.5
 ```
 
 Run java client
 
 ```shell
-docker run -it --rm -v PATH_TO_YOUR_JAR_FILE.jar:/app.jar \
-    -v PATH_TO_YOUR_TAOS_CONFIG/taos.cfg:/etc/taos/taos.cfg \
-    --add-host=tdengine:172.17.0.2 \
-    enix223/tdengine-openjdk-client:3.0.2.3 \
+docker run -it --rm \
+    -v YOUR_PATH_TO_JAVA_CLIENT/client.jar:/app.jar \
+    -v YOUR_PATH_TO_TAOS_CONFIG/taos.cfg:/etc/taos/taos.cfg \
+    --add-host=tdengine:TDENGINE_DB_DOCKER_IP_ADDRESS \
+    enix223/tdengine-openjdk-client:17-3.0.2.5 \
     java -jar /app.jar
 ```
 
