@@ -22,16 +22,29 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build 17-jdk-focal
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=17.0.6_10
+            JDKTAG=17.0.6_10-jdk-focal
             TDVERSION=3.0.2.5
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:17.0.6_10-3.0.2.5
-            enix223/tdengine-openjdk-client:17-3.0.2.5
+            enix223/tdengine-openjdk-client:17.0.6_10-jdk-focal-3.0.2.5
+            enix223/tdengine-openjdk-client:17-jdk-focal-3.0.2.5
+      - name: Build 17-jdk-alpine
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64, linux/arm64/v8
+          build-args: |
+            JDKTAG=17.0.6_10-jdk-alpine
+            TDVERSION=3.0.2.5
+          file: Dockerfile
+          push: true
+          tags: |
+            enix223/tdengine-openjdk-client:17.0.6_10-jdk-alpine-3.0.2.5
+            enix223/tdengine-openjdk-client:17-jdk-alpine-3.0.2.5

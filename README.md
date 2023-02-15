@@ -8,7 +8,7 @@
 
 This repo's target is to build a container for tdengine java client to run with **native connection**.
 
-Please note: This image is base on [eclipse-temurin focal](https://hub.docker.com/_/eclipse-temurin) (Official Images for OpenJDK binaries).
+Please note: This image is base on [eclipse-temurin](https://hub.docker.com/_/eclipse-temurin) image (Official Images for OpenJDK binaries).
 
 ## 2. Usage
 
@@ -40,7 +40,7 @@ For more information, please refer to [example](./example/).
 
 Argument:
 
-* JDKVER - OpenJDK version, default to **17**
+* JDKTAG - OpenJDK image tag, default to **17.0.6_10-jdk-focal**
 * TDVERSION - TDEngine version, default to **3.0.2.3**
 
 Build command
@@ -49,9 +49,9 @@ docker pull eclipse-temurin:17.0.6_10-jdk-focal
 
 ```shell
 docker build \
-    --build-arg JDKVER=17.0.6_10 \
+    --build-arg JDKTAG=17.0.6_10-jdk-focal \
     --build-arg TDVERSION=3.0.2.5 \
-    --tag enix223/tdengine-openjdk-client:17.0.6_10-3.0.2.5 \
-    --tag enix223/tdengine-openjdk-client:17-3.0.2.5 \
+    --tag enix223/tdengine-openjdk-client:17.0.6_10-jdk-focal-3.0.2.5 \
+    --tag enix223/tdengine-openjdk-client:17-jdk-focal-3.0.2.5 \
     .
 ```

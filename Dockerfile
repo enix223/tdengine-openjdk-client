@@ -1,4 +1,4 @@
-ARG JDKVER=17.0.6_10
+ARG JDKTAG=17.0.6_10-jdk-focal
 FROM ubuntu:focal AS build-env
 ARG TDVERSION=3.0.2.5
 ARG TDVERSION_FULL=ver-${TDVERSION}
@@ -15,7 +15,7 @@ RUN git submodule update --init --recursive
 RUN ./build.sh
 
 
-FROM eclipse-temurin:${JDKVER}-jdk-focal
+FROM eclipse-temurin:${JDKTAG}
 ARG TDVERSION
 ADD taos.cfg /etc/taos/taos.cfg
 COPY --from=build-env /tdengine/debug/build/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so.${TDVERSION}
