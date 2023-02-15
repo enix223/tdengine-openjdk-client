@@ -40,18 +40,34 @@ For more information, please refer to [example](./example/).
 
 Argument:
 
-* JDKTAG - OpenJDK image tag, default to **17.0.6_10-jdk-focal**
+* JDKVER - OpenJDK image tag, default to **17.0.6_10**
 * TDVERSION - TDEngine version, default to **3.0.2.3**
 
-Build command
+
+### 3.1 Build focal image
 
 docker pull eclipse-temurin:17.0.6_10-jdk-focal
 
 ```shell
 docker build \
-    --build-arg JDKTAG=17.0.6_10-jdk-focal \
+    -f Dockerfile_focal \
+    --build-arg JDKVER=17.0.6_10 \
     --build-arg TDVERSION=3.0.2.5 \
     --tag enix223/tdengine-openjdk-client:17.0.6_10-jdk-focal-3.0.2.5 \
     --tag enix223/tdengine-openjdk-client:17-jdk-focal-3.0.2.5 \
+    .
+```
+
+### 3.2 Build alpine image
+
+docker pull eclipse-temurin:17.0.6_10-jdk-alpine
+
+```shell
+docker build \
+    -f Dockerfile_alpine \
+    --build-arg JDKVER=17.0.6_10 \
+    --build-arg TDVERSION=3.0.2.5 \
+    --tag enix223/tdengine-openjdk-client:17.0.6_10-jdk-alpine-3.0.2.5 \
+    --tag enix223/tdengine-openjdk-client:17-jdk-alpine-3.0.2.5 \
     .
 ```

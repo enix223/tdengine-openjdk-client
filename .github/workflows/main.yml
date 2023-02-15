@@ -28,9 +28,9 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKTAG=17.0.6_10-jdk-focal
+            JDKVER=17.0.6_10
             TDVERSION=3.0.2.5
-          file: Dockerfile
+          file: Dockerfile_focal
           push: true
           tags: |
             enix223/tdengine-openjdk-client:17.0.6_10-jdk-focal-3.0.2.5
@@ -39,11 +39,11 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           build-args: |
-            JDKTAG=17.0.6_10-jdk-alpine
+            JDKVER=17.0.6_10
             TDVERSION=3.0.2.5
-          file: Dockerfile
+          file: Dockerfile_alpine
           push: true
           tags: |
             enix223/tdengine-openjdk-client:17.0.6_10-jdk-alpine-3.0.2.5
