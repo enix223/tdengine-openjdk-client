@@ -6,6 +6,7 @@ ARG TDVERSION_FULL=ver-${TDVERSION}
 WORKDIR /tdengine
 
 RUN apk add --no-cache alpine-sdk gcc musl-dev git cmake bash
+RUN apk add --no-cache jansson-dev snappy-dev xz-dev libzip-dev zlib-dev
 
 RUN git clone --depth=1 -b ${TDVERSION_FULL} https://github.com/taosdata/TDengine .
 RUN git submodule update --init --recursive

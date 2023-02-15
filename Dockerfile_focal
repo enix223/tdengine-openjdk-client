@@ -8,7 +8,7 @@ WORKDIR /tdengine
 RUN apt-get update
 RUN apt-get install -y tzdata
 RUN apt-get install -y gcc cmake build-essential git libssl-dev
-RUN apt-get install -y build-essential libjansson-dev libsnappy-dev liblzma-dev libz-dev zlib1g pkg-config
+RUN apt-get install -y libjansson-dev libsnappy-dev liblzma-dev libz-dev zlib1g pkg-config
 
 RUN git clone --depth=1 -b ${TDVERSION_FULL} https://github.com/taosdata/TDengine .
 RUN git submodule update --init --recursive
@@ -17,6 +17,8 @@ RUN ./build.sh
 
 FROM eclipse-temurin:${JDKVER}-jdk-focal
 ARG TDVERSION
+RUN apt-get update
+RUN apt-get install -y netcat
 ADD taos.cfg /etc/taos/taos.cfg
 COPY --from=build-env /tdengine/debug/build/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so.${TDVERSION}
 RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so
