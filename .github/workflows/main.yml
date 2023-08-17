@@ -29,13 +29,13 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=17.0.7_7
-            TDVERSION=3.0.6.0
+            JDKVER=17.0.8_7
+            TDVERSION=3.0.7.0
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:17.0.7_7-jdk-focal-3.0.6.0
-            enix223/tdengine-openjdk-client:17-jdk-focal-3.0.6.0
+            enix223/tdengine-openjdk-client:17.0.8_7-jdk-focal-3.0.7.0
+            enix223/tdengine-openjdk-client:17-jdk-focal-3.0.7.0
 
       - name: Build 11-jdk-focal
         uses: docker/build-push-action@v3
@@ -43,13 +43,13 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=11.0.19_7
-            TDVERSION=3.0.6.0
+            JDKVER=11.0.20_8
+            TDVERSION=3.0.7.0
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:11.0.19_7-jdk-focal-3.0.6.0
-            enix223/tdengine-openjdk-client:11-jdk-focal-3.0.6.0
+            enix223/tdengine-openjdk-client:11.0.20_8-jdk-focal-3.0.7.0
+            enix223/tdengine-openjdk-client:11-jdk-focal-3.0.7.0
 
       - name: Build 8-jdk-focal
         uses: docker/build-push-action@v3
@@ -57,10 +57,10 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=8u372-b07
-            TDVERSION=3.0.6.0
+            JDKVER=8u382-b05
+            TDVERSION=3.0.7.0
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:8u372-b07-jdk-focal-3.0.6.0
-            enix223/tdengine-openjdk-client:8-jdk-focal-3.0.6.0
+            enix223/tdengine-openjdk-client:8u382-b05-jdk-focal-3.0.7.0
+            enix223/tdengine-openjdk-client:8-jdk-focal-3.0.7.0
