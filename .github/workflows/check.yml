@@ -1,0 +1,32 @@
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: |
+          TAG=$(curl -s "https://api.github.com/repos/taosdata/TDengine/releases/latest" | jq -r '.tag_name' | sed -e 's/ver-//g')
+          echo "Latest tag: $TAG"
+          echo "::set-output name=tag::$TAG"
+
+      - name: Check if tag changed
+        id: check_tag_change
+        run: |
+          LAST_TAG=$(cat LATEST_VERSION)
+          echo "Last tag: $LAST_TAG"
+          echo "::set-output name=tag_changed::$(test $LAST_TAG != ${{ steps.get_latest_tag.outputs.tag }} && echo true || echo false)"
+      
+      - name: Build on Tag Change
+        if: steps.check_tag_change.outputs.tag_changed == 'true'
+        run: |
+          echo "${{ steps.get_latest_tag.outputs.tag }}" > LATEST_VERSION
+          git config --global user.name "Enix Yu"
+          git config --global user.email "enix223@163.com"
+          git commit -am "feat: bump version@${{ steps.get_latest_tag.outputs.tag }}"
+          git tag ${{ steps.get_latest_tag.outputs.tag }}
+          git push
+          git push --tags
