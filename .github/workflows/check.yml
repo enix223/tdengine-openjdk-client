@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '30 6 * * *'
 
 jobs:
   docker:
@@ -18,14 +18,14 @@ jobs:
         run: |
           TAG=$(curl -s "https://api.github.com/repos/taosdata/TDengine/releases/latest" | jq -r '.tag_name' | sed -e 's/ver-//g')
           echo "Latest tag: $TAG"
-          echo "::set-output name=tag::$TAG"
+          echo "{tag}={$TAG}" >> $GITHUB_OUTPUT
 
       - name: Check if tag changed
         id: check_tag_change
         run: |
           LAST_TAG=$(cat LATEST_VERSION)
           echo "Last tag: $LAST_TAG"
-          echo "::set-output name=tag_changed::$(test $LAST_TAG != ${{ steps.get_latest_tag.outputs.tag }} && echo true || echo false)"
+          echo "{tag_changed}={$(test $LAST_TAG != ${{ steps.get_latest_tag.outputs.tag }} && echo true || echo false)}" >> $GITHUB_OUTPUT
       
       - name: Build on Tag Change
         if: steps.check_tag_change.outputs.tag_changed == 'true'
@@ -37,7 +37,15 @@ jobs:
           git tag ${{ steps.get_latest_tag.outputs.tag }}
 
       - name: Push changes
+        if: steps.check_tag_change.outputs.tag_changed == 'true'
         uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          branch: ${{ github.head_ref }}
+
+      - name: Push tags
+        uses: ad-m/github-push-action@v0.6.0
+        if: steps.check_tag_change.outputs.tag_changed == 'true'
         with:
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
           branch: ${{ github.head_ref }}
