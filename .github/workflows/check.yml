@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '45 3 * * *'
 
 jobs:
   docker:
@@ -40,4 +40,5 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          branch: main
           tags: true
