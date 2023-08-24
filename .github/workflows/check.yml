@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '45 3 * * *'
+    - cron: '0 4 * * *'
 
 jobs:
   docker:
@@ -31,8 +31,8 @@ jobs:
         if: steps.check_tag_change.outputs.tag_changed == 'true'
         run: |
           echo "${{ steps.get_latest_tag.outputs.tag }}" > LATEST_VERSION
-          git config --global user.name "Enix Yu"
-          git config --global user.email "enix223@163.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git commit -am "feat: bump version@${{ steps.get_latest_tag.outputs.tag }}"
           git tag ${{ steps.get_latest_tag.outputs.tag }}
 
