@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '15 9 * * *'
 
 jobs:
   docker:
@@ -35,5 +35,9 @@ jobs:
           git config --global user.email "enix223@163.com"
           git commit -am "feat: bump version@${{ steps.get_latest_tag.outputs.tag }}"
           git tag ${{ steps.get_latest_tag.outputs.tag }}
-          git push
-          git push --tags
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          tags: true
