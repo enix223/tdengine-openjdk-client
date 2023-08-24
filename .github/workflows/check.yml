@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '15 9 * * *'
+    - cron: '0 10 * * *'
 
 jobs:
   docker:
