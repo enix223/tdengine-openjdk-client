@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 8 * * *'
 
 jobs:
   docker:
@@ -10,10 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
-          persist-credentials: false
-          fetch-depth: 0
 
       - name: Get Latest Tag
         id: get_latest_tag
@@ -31,27 +27,16 @@ jobs:
       
       - name: Update version on Tag Change
         if: steps.check_tag_change.outputs.tag_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "${{ steps.get_latest_tag.outputs.tag }}" > LATEST_VERSION
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -am "feat: bump version@${{ steps.get_latest_tag.outputs.tag }}"
           git tag v${{ steps.get_latest_tag.outputs.tag }}
-
-      - name: Push changes
-        if: steps.check_tag_change.outputs.tag_changed == 'true'
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
-          branch: ${{ github.head_ref }}
-
-      - name: Push tags
-        uses: ad-m/github-push-action@v0.6.0
-        if: steps.check_tag_change.outputs.tag_changed == 'true'
-        with:
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
-          branch: ${{ github.head_ref }}
-          tags: true
+          git push
+          git push --tags
 
       - name: Trigger docker build
         if: steps.check_tag_change.outputs.tag_changed == 'true'
