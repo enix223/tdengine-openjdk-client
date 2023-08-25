@@ -2,7 +2,7 @@ name: Sync tdengine latest version
 
 on:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   docker:
@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Get Latest Tag
         id: get_latest_tag
@@ -27,14 +29,14 @@ jobs:
           echo "Last tag: $LAST_TAG"
           echo "tag_changed=$(test $LAST_TAG != ${{ steps.get_latest_tag.outputs.tag }} && echo true || echo false)" >> $GITHUB_OUTPUT
       
-      - name: Build on Tag Change
+      - name: Update version on Tag Change
         if: steps.check_tag_change.outputs.tag_changed == 'true'
         run: |
           echo "${{ steps.get_latest_tag.outputs.tag }}" > LATEST_VERSION
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -am "feat: bump version@${{ steps.get_latest_tag.outputs.tag }}"
-          git tag ${{ steps.get_latest_tag.outputs.tag }}
+          git tag v${{ steps.get_latest_tag.outputs.tag }}
 
       - name: Push changes
         if: steps.check_tag_change.outputs.tag_changed == 'true'
