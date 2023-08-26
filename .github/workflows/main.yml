@@ -33,7 +33,7 @@ jobs:
       - name: Get latest tag
         id: get_latest_tag
         run: |
-          TAG=$(git describe --tags --abbrev=0)
+          TAG=$(cat LATEST_VERSION)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build 17-jdk-focal
