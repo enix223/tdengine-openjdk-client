@@ -44,12 +44,12 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=17.0.8_7
+            JDKVER=17.0.9_9
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:17.0.8_7-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:17.0.9_9-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
             enix223/tdengine-openjdk-client:17-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
 
       - name: Build 11-jdk-focal
@@ -58,12 +58,12 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=11.0.20_8
+            JDKVER=11.0.21_9
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:11.0.20_8-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:11.0.21_9-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
             enix223/tdengine-openjdk-client:11-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
 
       - name: Build 8-jdk-focal
@@ -72,10 +72,10 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=8u382-b05
+            JDKVER=8u392-b08
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:8u382-b05-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:8u392-b08-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
             enix223/tdengine-openjdk-client:8-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
