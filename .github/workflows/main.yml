@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         jdk: [17.0.11_9, 11.0.23_9, 8u412-b08]
-        platforms: [linux/amd64, linux/arm64/v8]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: ${{ matrix.platforms }}
+          platforms: linux/amd64, linux/arm64/v8
           build-args: |
             JDKVER=${{ matrix.jdk }}
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
