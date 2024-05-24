@@ -54,7 +54,7 @@ docker build \
     -f Dockerfile_focal \
     --build-arg JDKVER=17.0.6_10 \
     --build-arg TDVERSION=3.0.2.5 \
-    --build-arg TARGETARCH=linux/arm64/v8 \
+    --build-arg TARGETARCH=arm64 \
     --tag enix223/tdengine-openjdk-client:17.0.6_10-jdk-focal-3.0.2.5 \
     .
 ```
