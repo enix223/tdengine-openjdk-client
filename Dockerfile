@@ -9,7 +9,7 @@ ADD taos.cfg /etc/taos/taos.cfg
 
 WORKDIR /tmp
 
-RUN if [ "$TARGETARCH" = "linux/arm64/v8" ]; then \
+RUN if [ "$TARGETARCH" = "linux/arm64/v8" ] || [ "$TARGETARCH" = "linux/arm64" ]; then \
     export ARCH=arm64; \
     else \
         export ARCH=x64; \

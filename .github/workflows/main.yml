@@ -38,7 +38,7 @@ jobs:
           TAG=$(cat LATEST_VERSION)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Build 17-jdk-focal
+      - name: Build image
         uses: docker/build-push-action@v3
         with:
           context: .
