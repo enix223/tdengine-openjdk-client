@@ -9,7 +9,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      matrix:
+        jdk: [17.0.11_9, 11.0.23_9, 8u412-b08]
+        platforms: [linux/amd64, linux/arm64/v8]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,40 +43,11 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: ${{ matrix.platforms }}
           build-args: |
-            JDKVER=17.0.9_9
+            JDKVER=${{ matrix.jdk }}
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:17.0.9_9-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:17-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-
-      - name: Build 11-jdk-focal
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64, linux/arm64/v8
-          build-args: |
-            JDKVER=11.0.21_9
-            TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
-          file: Dockerfile
-          push: true
-          tags: |
-            enix223/tdengine-openjdk-client:11.0.21_9-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:11-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-
-      - name: Build 8-jdk-focal
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64, linux/arm64/v8
-          build-args: |
-            JDKVER=8u392-b08
-            TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
-          file: Dockerfile
-          push: true
-          tags: |
-            enix223/tdengine-openjdk-client:8u392-b08-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:8-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:${{ matrix.jdk }}-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}

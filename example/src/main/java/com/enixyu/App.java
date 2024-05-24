@@ -16,25 +16,25 @@ public class App {
   public static void main(String[] args) {
     try {
       Class.forName("com.taosdata.jdbc.TSDBDriver");
-      String jdbcUrl = "jdbc:TAOS://tdengine:6030/db?user=root&password=taosdata";
+      String jdbcUrl = "jdbc:TAOS://tdengine:6030/log?user=root&password=taosdata";
       Connection conn = DriverManager.getConnection(jdbcUrl);
 
       Statement stmt = conn.createStatement();
       // create database
-      stmt.executeUpdate("create database if not exists db");
+      stmt.executeUpdate("create database if not exists demo");
       // use database
-      stmt.executeUpdate("use db");
+      stmt.executeUpdate("use demo");
       // create table
       stmt.executeUpdate(
-        "create table if not exists tb (ts timestamp, temperature int, humidity float)");
+        "create table if not exists metric (ts timestamp, temperature int, humidity float)");
       // insert data
       int affectedRows = stmt.executeUpdate(
-        "insert into tb values(now, 23, 10.3) (now + 1s, 20, 9.3)");
+        "insert into metric values(now, 23, 10.3) (now + 1s, 20, 9.3)");
 
       System.out.println("insert " + affectedRows + " rows.");
 
       // query data
-      ResultSet resultSet = stmt.executeQuery("select * from tb");
+      ResultSet resultSet = stmt.executeQuery("select * from metric");
       Timestamp ts = null;
       int temperature = 0;
       float humidity = 0;
@@ -48,7 +48,7 @@ public class App {
 
       // get metadata
       var metadata = conn.getMetaData().unwrap(TSDBDatabaseMetaData.class);
-      var cols = metadata.getColumns("db", "", "tb", "");
+      var cols = metadata.getColumns("demo", "", "metric", "");
       while (cols.next()) {
         var name = cols.getString("COLUMN_NAME");
         var type = cols.getString("DATA_TYPE");

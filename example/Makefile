@@ -6,7 +6,7 @@ init:
 		--hostname=tdengine \
 		-p 6030-6041:6030-6041 \
    		-p 6030-6041:6030-6041/udp \
-		tdengine/tdengine:3.0.2.5
+		tdengine/tdengine:3.3.0.3
 
 prepare: init
 	sleep 5 && docker exec -it tdengine-openjdk-demo taos -s "create database db"
@@ -19,7 +19,7 @@ run: package
 	docker run -it --rm -v $(PWD)/target/tdengine-demo-1.0-SNAPSHOT-jar-with-dependencies.jar:/tdengine-demo.jar \
 		-v $(PWD)/taos.cfg:/etc/taos/taos.cfg \
 		--add-host=tdengine:$$IP \
-		enix223/tdengine-openjdk-client:17-3.0.2.5 \
+		enix223/tdengine-openjdk-client:17-jdk-focal-3.3.0.3 \
 		java -jar /tdengine-demo.jar
 
 clean:
