@@ -51,7 +51,7 @@ docker pull eclipse-temurin:17.0.6_10-jdk-focal
 
 ```shell
 docker build \
-    -f Dockerfile_focal \
+    -f Dockerfile \
     --build-arg JDKVER=17.0.6_10 \
     --build-arg TDVERSION=3.0.2.5 \
     --build-arg TARGETARCH=arm64 \
