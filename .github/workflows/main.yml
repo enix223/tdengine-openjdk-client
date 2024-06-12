@@ -11,13 +11,13 @@ jobs:
     strategy:
       matrix:
         jdk:
-          - 21.0.3_9-jdk-jammy
-          - 17.0.11_9-jdk-focal
-          - 17.0.11_9-jdk-jammy
-          - 11.0.23_9-jdk-focal
-          - 11.0.23_9-jdk-jammy
           - 8u412-b08-jdk-focal
           - 8u412-b08-jdk-jammy
+          - 11.0.23_9-jdk-focal
+          - 11.0.23_9-jdk-jammy
+          - 17.0.11_9-jdk-focal
+          - 17.0.11_9-jdk-jammy
+          - 21.0.3_9-jdk-jammy
     steps:
       - name: Checkout
         uses: actions/checkout@v3
