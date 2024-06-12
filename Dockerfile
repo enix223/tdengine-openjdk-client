@@ -1,5 +1,5 @@
-ARG JDKVER=17.0.11_9
-FROM eclipse-temurin:${JDKVER}-jdk-focal
+ARG JDKVER=17.0.11_9-jdk-focal
+FROM eclipse-temurin:${JDKVER}
 ARG TDVERSION=3.3.0.3
 ARG TARGETARCH
 

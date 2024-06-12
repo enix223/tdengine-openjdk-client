@@ -10,7 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [17.0.11_9, 11.0.23_9, 8u412-b08]
+        jdk:
+          - 21.0.3_9-jdk-jammy
+          - 17.0.11_9-jdk-focal
+          - 17.0.11_9-jdk-jammy
+          - 11.0.23_9-jdk-focal
+          - 11.0.23_9-jdk-jammy
+          - 8u412-b08-jdk-focal
+          - 8u412-b08-jdk-jammy
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -49,4 +56,4 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:${{ matrix.jdk }}-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:${{ matrix.jdk }}-${{ steps.get_latest_tag.outputs.tag }}
