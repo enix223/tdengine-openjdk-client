@@ -11,13 +11,10 @@ jobs:
     strategy:
       matrix:
         jdk:
-          - 8u472-b08-jdk-focal
           - 8u472-b08-jdk-jammy
           - 8u472-b08-jdk-noble
-          - 11.0.29_7-jdk-focal
           - 11.0.29_7-jdk-jammy
           - 11.0.29_7-jdk-noble
-          - 17.0.17_10-jdk-focal
           - 17.0.17_10-jdk-jammy
           - 17.0.17_10-jdk-noble
           - 21.0.9_10-jdk-jammy
