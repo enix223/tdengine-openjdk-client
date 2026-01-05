@@ -11,17 +11,17 @@ jobs:
     strategy:
       matrix:
         jdk:
-          - 8u422-b05-jdk-focal
-          - 8u422-b05-jdk-jammy
-          - 8u422-b05-jdk-noble
-          - 11.0.24_8-jdk-focal
-          - 11.0.24_8-jdk-jammy
-          - 11.0.24_8-jdk-noble
-          - 17.0.12_7-jdk-focal
-          - 17.0.12_7-jdk-jammy
-          - 17.0.12_7-jdk-noble
-          - 21.0.4_7-jdk-jammy
-          - 21.0.4_7-jdk-noble
+          - 8u472-b08-jdk-focal
+          - 8u472-b08-jdk-jammy
+          - 8u472-b08-jdk-noble
+          - 11.0.29_7-jdk-focal
+          - 11.0.29_7-jdk-jammy
+          - 11.0.29_7-jdk-noble
+          - 17.0.17_10-jdk-focal
+          - 17.0.17_10-jdk-jammy
+          - 17.0.17_10-jdk-noble
+          - 21.0.9_10-jdk-jammy
+          - 21.0.9_10-jdk-noble
     steps:
       - name: Checkout
         uses: actions/checkout@v3
