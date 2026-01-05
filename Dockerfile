@@ -4,7 +4,7 @@ ARG TDVERSION=3.3.0.3
 ARG TARGETARCH
 
 RUN apt-get update
-RUN apt-get install -y netcat
+RUN apt-get install -y netcat-openbsd
 ADD taos.cfg /etc/taos/taos.cfg
 
 WORKDIR /tmp
