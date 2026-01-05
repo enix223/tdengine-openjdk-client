@@ -1,7 +1,6 @@
 name: Build and deploy to docker hub
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - '*'
@@ -9,6 +8,17 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk:
+          - 8u472-b08-jdk-jammy
+          - 8u472-b08-jdk-noble
+          - 11.0.29_7-jdk-jammy
+          - 11.0.29_7-jdk-noble
+          - 17.0.17_10-jdk-jammy
+          - 17.0.17_10-jdk-noble
+          - 21.0.9_10-jdk-jammy
+          - 21.0.9_10-jdk-noble
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,44 +46,15 @@ jobs:
           TAG=$(cat LATEST_VERSION)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Build 17-jdk-focal
+      - name: Build image
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            JDKVER=17.0.8_7
+            JDKVER=${{ matrix.jdk }}
             TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
           file: Dockerfile
           push: true
           tags: |
-            enix223/tdengine-openjdk-client:17.0.8_7-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:17-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-
-      - name: Build 11-jdk-focal
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64, linux/arm64/v8
-          build-args: |
-            JDKVER=11.0.20_8
-            TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
-          file: Dockerfile
-          push: true
-          tags: |
-            enix223/tdengine-openjdk-client:11.0.20_8-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:11-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-
-      - name: Build 8-jdk-focal
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64, linux/arm64/v8
-          build-args: |
-            JDKVER=8u382-b05
-            TDVERSION=${{ steps.get_latest_tag.outputs.tag }}
-          file: Dockerfile
-          push: true
-          tags: |
-            enix223/tdengine-openjdk-client:8u382-b05-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
-            enix223/tdengine-openjdk-client:8-jdk-focal-${{ steps.get_latest_tag.outputs.tag }}
+            enix223/tdengine-openjdk-client:${{ matrix.jdk }}-${{ steps.get_latest_tag.outputs.tag }}
