@@ -17,10 +17,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
         export ARCH=x64; \
     fi && curl -o tdengine.tar.gz https://www.tdengine.com/assets-download/3.0/TDengine-client-${TDVERSION}-Linux-$ARCH.tar.gz
 RUN tar -xf tdengine.tar.gz
-RUN cp TDengine-client-${TDVERSION}/driver/libtaos.so.${TDVERSION} /usr/lib/
-
-RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so
-RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so.1
+RUN cd TDengine-client-${TDVERSION} && ./install_client.sh
 
 RUN rm -rf /tmp/TDengine-client-*
 
