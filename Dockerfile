@@ -4,7 +4,7 @@ ARG TDVERSION=3.3.0.3
 ARG TARGETARCH
 
 RUN apt-get update
-RUN apt-get install -y netcat-openbsd
+RUN apt-get install -y netcat-traditional
 ADD taos.cfg /etc/taos/taos.cfg
 
 WORKDIR /tmp
@@ -13,14 +13,10 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     export ARCH=arm64; \
     else \
         export ARCH=x64; \
-    fi && curl -o tdengine.tar.gz https://www.tdengine.com/assets-download/3.0/TDengine-client-${TDVERSION}-Linux-$ARCH.tar.gz
-RUN tar -xf tdengine.tar.gz
-RUN cp TDengine-client-${TDVERSION}/driver/libtaos.so.${TDVERSION} /usr/lib/
-RUN cp TDengine-client-${TDVERSION}/driver/libtaosws.so /usr/lib/
+    fi && curl -o TDengine-client.tar.gz https://www.tdengine.com/assets-download/3.0/TDengine-client-${TDVERSION}-Linux-$ARCH.tar.gz
+RUN tar -xf TDengine-client.tar.gz
+RUN cd /tmp/TDengine-client-${TDVERSION} && ./install_client.sh
 
-RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so
-RUN ln -s /usr/lib/libtaos.so.${TDVERSION} /usr/lib/libtaos.so.1
-
-RUN rm -rf /tmp/TDengine-client-*
+RUN rm -rf /tmp/TDengine-client*
 
 WORKDIR /
