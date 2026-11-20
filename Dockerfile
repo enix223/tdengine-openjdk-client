@@ -15,7 +15,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
         export ARCH=x64; \
     fi && curl -o TDengine-client.tar.gz https://downloads.tdengine.com/tdengine-tsdb-oss/${TDVERSION}/tdengine-tsdb-oss-client-${TDVERSION}-linux-$ARCH.tar.gz
 RUN tar -xf TDengine-client.tar.gz
-RUN cd /tmp/TDengine-client-${TDVERSION} && ./install_client.sh
+RUN cd /tmp/tdengine-tsdb-oss-client-${TDVERSION} && ./install_client.sh
 
 RUN rm -rf /tmp/TDengine-client*
 
