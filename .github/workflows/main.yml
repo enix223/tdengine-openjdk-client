@@ -19,6 +19,8 @@ jobs:
           - 17.0.17_10-jdk-noble
           - 21.0.9_10-jdk-jammy
           - 21.0.9_10-jdk-noble
+          - 25.0.5_8-jdk-jammy
+          - 25.0.5_8-jdk-noble
           - 8u472-b08-jre-jammy
           - 8u472-b08-jre-noble
           - 11.0.29_7-jre-jammy
@@ -27,6 +29,8 @@ jobs:
           - 17.0.17_10-jre-noble
           - 21.0.9_10-jre-jammy
           - 21.0.9_10-jre-noble
+          - 25.0.5_8-jre-jammy
+          - 25.0.5_8-jre-noble
     steps:
       - name: Checkout
         uses: actions/checkout@v3
